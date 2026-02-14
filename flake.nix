@@ -32,6 +32,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.nashiru = import ./home/nashiru;
+          home-manager.backupFileExtension = "backup";
         }
       ];
     };
