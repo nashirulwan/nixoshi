@@ -18,7 +18,11 @@
     tree
     
     # File manager
+    # File manager
     nautilus
+    
+    # Dependencies for File Manager
+    gvfs
     
     # Browsers
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -37,6 +41,18 @@
     antigravity
     davinci-resolve
     
+    # Theme & Network Dependencies
+    glib-networking
+    gnome-themes-extra
+    adwaita-icon-theme
+    gsettings-desktop-schemas
+    
+    # Archives
+    zip
+    unzip
+    _7zz
+    file-roller
+    
     # Multimedia & Office (User additions)
     yt-dlp
     mpv
@@ -47,4 +63,10 @@
   
   # GPU screen recorder
   programs.gpu-screen-recorder.enable = true;
+
+  # Nautilus dependencies
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
+  services.udisks2.enable = true;
+  programs.dconf.enable = true;
 }

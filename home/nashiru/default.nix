@@ -12,6 +12,8 @@
   imports = [
     ./shell/fish.nix
     ./programs/git.nix
+    ./programs/yazi.nix
+    ./theme.nix
   ];
   
   # Let Home Manager manage itself
