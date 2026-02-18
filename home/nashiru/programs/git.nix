@@ -4,12 +4,14 @@
   programs.git = {
     enable = true;
     
-    # User information
-    userName = "Nashiru";
-    userEmail = "nashirulwan@users.noreply.github.com";
-    
-    # Git configuration
-    extraConfig = {
+    settings = {
+      # User information
+      user = {
+        name = "Nashiru";
+        email = "nashirulwan@users.noreply.github.com";
+      };
+      
+      # Git configuration
       init = {
         defaultBranch = "main";
       };
@@ -19,17 +21,17 @@
       core = {
         editor = "nvim";
       };
-    };
-    
-    # Git aliases
-    aliases = {
-      st = "status";
-      co = "checkout";
-      br = "branch";
-      ci = "commit";
-      unstage = "reset HEAD --";
-      last = "log -1 HEAD";
-      visual = "log --graph --oneline --decorate --all";
+      
+      # Git aliases
+      alias = {
+        st = "status";
+        co = "checkout";
+        br = "branch";
+        ci = "commit";
+        unstage = "reset HEAD --";
+        last = "log -1 HEAD";
+        visual = "log --graph --oneline --decorate --all";
+      };
     };
   };
 }
