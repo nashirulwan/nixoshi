@@ -16,6 +16,10 @@
   
   # Touchpad support for laptops
   services.libinput.enable = true;
+
+  # Required by end-4 dots-hyprland stack
+  services.geoclue2.enable = true;
+  services.upower.enable = true;
   
   # Essential Wayland tools and utilities
   environment.systemPackages = with pkgs; [
