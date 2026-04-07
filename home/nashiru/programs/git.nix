@@ -7,7 +7,7 @@
     settings = {
       # User information
       user = {
-        name = "Nashiru";
+        name = "nashiru";
         email = "nashirulwan@users.noreply.github.com";
       };
       

@@ -21,25 +21,23 @@
     wlogout
     gtk-engine-murrine
     jq
+    bibata-cursors
 
-    # Python + Jupyter + Data Viz stack
-    (python312.withPackages (ps: with ps; [
-      jupyterlab
-      ipykernel
-      matplotlib
-      seaborn
-      pandas
-      numpy
-    ]))
   ];
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
+    size = 24;
+  };
   
   # Import user modules
   imports = [
     inputs.illogical-flake.homeManagerModules.default
-    ./shell/fish.nix
     ./programs/git.nix
     ./programs/yazi.nix
-    ./theme.nix
   ];
 
   programs.illogical-impulse.enable = true;

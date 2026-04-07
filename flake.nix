@@ -17,10 +17,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Local editable end-4 dotfiles source
+    dotfiles = {
+      url = "path:/home/nashiru/dots-hyprland";
+      flake = false;
+    };
+
     # end-4 dots-hyprland (community Nix flake wrapper)
     illogical-flake = {
       url = "github:soymou/illogical-flake";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.dotfiles.follows = "dotfiles";
     };
   };
 

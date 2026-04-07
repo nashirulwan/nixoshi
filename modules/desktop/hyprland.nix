@@ -20,6 +20,9 @@
   # Required by end-4 dots-hyprland stack
   services.geoclue2.enable = true;
   services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
+  services.tlp.enable = false;
+  services.auto-cpufreq.enable = false;
   
   # Essential Wayland tools and utilities
   environment.systemPackages = with pkgs; [
@@ -31,5 +34,6 @@
     brightnessctl   # Brightness control
     playerctl       # Media player control
     wmenu           # Wayland menu
+    power-profiles-daemon # Provides powerprofilesctl
   ];
 }

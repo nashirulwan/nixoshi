@@ -10,6 +10,7 @@
     ../../modules/system/networking.nix
     ../../modules/system/locale.nix
     ../../modules/system/security.nix
+    ../../modules/system/bluetooth.nix
     
     # Desktop modules
     ../../modules/desktop/hyprland.nix
@@ -25,10 +26,13 @@
   # User account definition
   users.users.nashiru = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "uucp" ];
     shell = pkgs.fish;
     packages = with pkgs; [ tree ];
   };
+
+  # DaVinci Resolve needs an OpenCL runtime for AMD GPUs.
+  hardware.amdgpu.opencl.enable = true;
   
   # NixOS state version
   # DO NOT CHANGE - see manual for details

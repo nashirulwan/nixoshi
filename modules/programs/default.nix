@@ -30,6 +30,7 @@
     # Media & Communication
     zoom-us
     feishin
+    obs-studio
     
     # Development
     nodejs_22
@@ -37,6 +38,8 @@
     
     # Utilities
     polkit_gnome
+    kdePackages.kcmutils
+    kdePackages.plasma-nm
     pear-desktop
     antigravity
     davinci-resolve
@@ -52,13 +55,19 @@
     unzip
     _7zz
     file-roller
+    unrar
     
     # Multimedia & Office (User additions)
     yt-dlp
+    vlc
     mpv
     smplayer
     libreoffice
+    prismlauncher
     feh
+    nmap
+    obsidian
+    hyperhdr
   ];
   
   # GPU screen recorder
