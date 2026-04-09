@@ -33,7 +33,6 @@
     
     # Development
     nodejs_22
-    nodePackages.npm
     
     # Utilities
     polkit_gnome
@@ -59,6 +58,7 @@
     smplayer
     libreoffice
     feh
+    hyperhdr
   ];
   
   # GPU screen recorder

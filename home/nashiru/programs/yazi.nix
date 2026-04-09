@@ -3,6 +3,7 @@
 {
   programs.yazi = {
     enable = true;
+    shellWrapperName = "y";
     enableFishIntegration = false; # We use custom wrapper for persistence
     settings = {
       manager = {

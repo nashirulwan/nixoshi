@@ -4,7 +4,7 @@
   inputs = {
     # Main package repository
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
+
     # Home Manager for user dotfiles
     home-manager = {
       url = "github:nix-community/home-manager";
