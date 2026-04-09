@@ -36,6 +36,11 @@
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
+        # Apply overlays
+        { nixpkgs.overlays = [
+          (import ./overlays/renames.nix)
+        ]; }
+
         # Host configuration
         ./hosts/nixoshi
         
