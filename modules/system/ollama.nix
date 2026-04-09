@@ -4,7 +4,9 @@
   # Enable Ollama service
   services.ollama = {
     enable = true;
-    # Load gemma4:26b on startup
-    models = [ "gemma4:26b" ];
+    # Auto-download and load models on startup
+    # gemma4:26b - heavy coding tasks
+    # gemma4:9b - lightweight/scripting tasks
+    loadModels = [ "gemma4:26b" "gemma4:9b" ];
   };
 }
