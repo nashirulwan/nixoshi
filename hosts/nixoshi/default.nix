@@ -4,13 +4,15 @@
   imports = [
     # Hardware scan results
     ./hardware-configuration.nix
-    
+
     # System modules
     ../../modules/system/boot.nix
     ../../modules/system/networking.nix
     ../../modules/system/locale.nix
     ../../modules/system/security.nix
     ../../modules/system/bluetooth.nix
+    ../../modules/system/nix.nix
+    ../../modules/system/ollama.nix
     
     # Desktop modules
     ../../modules/desktop/hyprland.nix
