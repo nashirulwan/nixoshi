@@ -3,8 +3,8 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1775711038,
-        "narHash": "sha256-WBtpGeCorQoeS3cScEpinbTVC4jSJ6htb6Oqk8a0C4Q=",
+        "lastModified": 1776150937,
+        "narHash": "sha256-cy+IoMst9knO6edkCbNgMAyrcYvdKwMJd75i63UM/yU=",
         "path": "/home/nashiru/dots-hyprland",
         "type": "path"
       },

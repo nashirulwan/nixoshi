@@ -3,6 +3,8 @@
 {
   # Nix cache configuration untuk mengurangi download
   nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+
     # Binary substituters - download dari cache, bukan build dari source
     substituters = [
       "https://cache.nixos.org"

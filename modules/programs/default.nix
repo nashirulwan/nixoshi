@@ -59,6 +59,9 @@
     libreoffice
     feh
     hyperhdr
+    prismlauncher
+    brave
+    arduino-cli
   ];
   
   # GPU screen recorder

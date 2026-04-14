@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   # Home Manager version
@@ -13,7 +13,7 @@
     hyprpaper
     hyprlock
     hypridle
-    
+
     # Dependencies
     wofi
     dunst
@@ -38,9 +38,13 @@
     inputs.illogical-flake.homeManagerModules.default
     ./programs/git.nix
     ./programs/yazi.nix
+    ./shell/fish.nix
+    ./theme.nix
   ];
 
   programs.illogical-impulse.enable = true;
+
+  xdg.configFile."hypr/hyprland/general.conf".source = lib.mkForce ./hypr/general.conf;
   
   # Let Home Manager manage itself
   programs.home-manager.enable = true;
