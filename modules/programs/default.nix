@@ -58,6 +58,7 @@
     smplayer
     libreoffice
     feh
+    home-manager
     hyperhdr
     prismlauncher
     brave
