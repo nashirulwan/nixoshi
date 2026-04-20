@@ -15,7 +15,7 @@
     ../../modules/system/ollama.nix
     
     # Desktop modules
-    ../../modules/desktop/hyprland.nix
+    ../../modules/desktop/niri.nix
     ../../modules/desktop/fonts.nix
     ../../modules/desktop/pipewire.nix
     

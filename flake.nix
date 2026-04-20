@@ -17,17 +17,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Local editable end-4 dotfiles source
-    dotfiles = {
-      url = "path:/home/nashiru/dots-hyprland";
-      flake = false;
+    # Noctalia shell for Niri.
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # end-4 dots-hyprland (community Nix flake wrapper)
-    illogical-flake = {
-      url = "github:soymou/illogical-flake";
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.dotfiles.follows = "dotfiles";
     };
   };
 

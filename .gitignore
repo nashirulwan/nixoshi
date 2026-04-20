@@ -1,0 +1,14 @@
+# Editor and local files
+.DS_Store
+*~
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Runtime state and local databases
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
