@@ -126,7 +126,7 @@ curl -fsS http://127.0.0.1:8090/json-rpc \
 The Niri, Noctalia, and HyperHDR migration work is on:
 
 ```bash
-codex/hyperhdr-monitor-shortcuts
+niri-noctalia-hyperhdr
 ```
 
 Merge or push this branch to `main` when it is ready to become the default GitHub view.
