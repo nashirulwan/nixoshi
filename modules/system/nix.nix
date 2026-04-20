@@ -22,4 +22,15 @@
     max-jobs = "auto";           # Pakai semua CPU core
     cores = 0;                   # 0 = unlimited cores untuk build
   };
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  nix.optimise = {
+    automatic = true;
+    dates = [ "weekly" ];
+  };
 }

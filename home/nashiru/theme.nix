@@ -2,24 +2,23 @@
 
 {
   home.packages = with pkgs; [
-    whitesur-gtk-theme
-    whitesur-icon-theme
-    whitesur-cursors
+    adw-gtk3
+    papirus-icon-theme
   ];
 
   gtk = {
     enable = true;
     theme = {
-      name = "WhiteSur-Dark";
-      package = pkgs.whitesur-gtk-theme;
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
     };
     iconTheme = {
-      name = "WhiteSur";
-      package = pkgs.whitesur-icon-theme;
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
     };
     cursorTheme = {
-      name = "WhiteSur-cursors";
-      package = pkgs.whitesur-cursors;
+      name = config.home.pointerCursor.name;
+      package = config.home.pointerCursor.package;
     };
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
@@ -36,7 +35,20 @@
     };
   };
 
-  xdg.configFile."gtk-4.0/gtk.css".force = true;
+  xdg.configFile = {
+    "gtk-3.0/gtk.css" = {
+      force = true;
+      text = ''
+        @import url("noctalia.css");
+      '';
+    };
+    "gtk-4.0/gtk.css" = {
+      force = true;
+      text = ''
+        @import url("noctalia.css");
+      '';
+    };
+  };
 
   qt = {
     enable = true;

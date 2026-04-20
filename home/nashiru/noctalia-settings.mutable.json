@@ -1,0 +1,369 @@
+{
+  "appLauncher": {
+    "enableClipboardHistory": true,
+    "iconMode": "tabler",
+    "showCategories": true,
+    "terminalCommand": "kitty -e"
+  },
+  "bar": {
+    "backgroundOpacity": 0.93,
+    "barType": "simple",
+    "density": "default",
+    "frameRadius": 12,
+    "frameThickness": 8,
+    "marginHorizontal": 4,
+    "marginVertical": 4,
+    "outerCorners": true,
+    "position": "top",
+    "showCapsule": true,
+    "widgets": {
+      "center": [
+        {
+          "hideUnoccupied": false,
+          "id": "Workspace"
+        }
+      ],
+      "left": [
+        {
+          "id": "Launcher"
+        },
+        {
+          "id": "Clock"
+        },
+        {
+          "id": "SystemMonitor"
+        },
+        {
+          "id": "ActiveWindow"
+        },
+        {
+          "id": "MediaMini"
+        }
+      ],
+      "right": [
+        {
+          "id": "Tray"
+        },
+        {
+          "id": "NotificationHistory"
+        },
+        {
+          "id": "Battery"
+        },
+        {
+          "id": "Volume"
+        },
+        {
+          "id": "Brightness"
+        },
+        {
+          "id": "ControlCenter"
+        }
+      ]
+    }
+  },
+  "colorSchemes": {
+    "darkMode": true,
+    "predefinedScheme": "Noctalia (default)",
+    "syncGsettings": true,
+    "useWallpaperColors": false
+  },
+  "controlCenter": {
+    "cards": [
+      {
+        "enabled": true,
+        "id": "profile-card"
+      },
+      {
+        "enabled": true,
+        "id": "shortcuts-card"
+      },
+      {
+        "enabled": true,
+        "id": "audio-card"
+      },
+      {
+        "enabled": true,
+        "id": "weather-card"
+      },
+      {
+        "enabled": true,
+        "id": "media-sysmon-card"
+      }
+    ],
+    "position": "close_to_bar_button"
+  },
+  "desktopWidgets": {
+    "enabled": true,
+    "gridSnap": true,
+    "gridSnapScale": true,
+    "monitorWidgets": [
+      {
+        "name": "eDP-1",
+        "widgets": [
+          {
+            "clockStyle": "digital",
+            "format": "HH:mm\\nd MMMM yyyy",
+            "id": "Clock",
+            "roundedCorners": true,
+            "scale": 1.0,
+            "showBackground": true,
+            "x": 48,
+            "y": 96
+          },
+          {
+            "id": "Weather",
+            "roundedCorners": true,
+            "scale": 1.0,
+            "showBackground": true,
+            "x": 48,
+            "y": 288
+          },
+          {
+            "id": "MediaPlayer",
+            "roundedCorners": true,
+            "scale": 1.0,
+            "showAlbumArt": true,
+            "showBackground": true,
+            "showButtons": true,
+            "showVisualizer": true,
+            "x": 48,
+            "y": 456
+          },
+          {
+            "id": "SystemStat",
+            "layout": "bottom",
+            "roundedCorners": true,
+            "scale": 1.0,
+            "showBackground": true,
+            "statType": "CPU",
+            "x": 1480,
+            "y": 96
+          },
+          {
+            "height": 72,
+            "hideWhenIdle": false,
+            "id": "AudioVisualizer",
+            "roundedCorners": true,
+            "scale": 1.0,
+            "showBackground": true,
+            "visualizerType": "linear",
+            "width": 320,
+            "x": 1320,
+            "y": 800
+          }
+        ]
+      },
+      {
+        "name": "HDMI-A-1",
+        "widgets": [
+          {
+            "clockStyle": "digital",
+            "format": "HH:mm\\nd MMMM yyyy",
+            "id": "Clock",
+            "roundedCorners": true,
+            "scale": 1.0,
+            "showBackground": true,
+            "x": 64,
+            "y": 96
+          },
+          {
+            "id": "Weather",
+            "roundedCorners": true,
+            "scale": 1.0,
+            "showBackground": true,
+            "x": 64,
+            "y": 288
+          },
+          {
+            "id": "MediaPlayer",
+            "roundedCorners": true,
+            "scale": 1.0,
+            "showAlbumArt": true,
+            "showBackground": true,
+            "showButtons": true,
+            "showVisualizer": true,
+            "x": 64,
+            "y": 456
+          },
+          {
+            "id": "SystemStat",
+            "layout": "bottom",
+            "roundedCorners": true,
+            "scale": 1.0,
+            "showBackground": true,
+            "statType": "CPU",
+            "x": 1480,
+            "y": 96
+          },
+          {
+            "height": 72,
+            "hideWhenIdle": false,
+            "id": "AudioVisualizer",
+            "roundedCorners": true,
+            "scale": 1.0,
+            "showBackground": true,
+            "visualizerType": "linear",
+            "width": 320,
+            "x": 1320,
+            "y": 880
+          }
+        ]
+      }
+    ],
+    "overviewEnabled": true
+  },
+  "dock": {
+    "backgroundOpacity": 1,
+    "displayMode": "auto_hide",
+    "dockType": "floating",
+    "enabled": true,
+    "launcherPosition": "end",
+    "position": "bottom",
+    "showLauncherIcon": true,
+    "size": 1
+  },
+  "general": {
+    "enableBlurBehind": true,
+    "enableShadows": true,
+    "radiusRatio": 1,
+    "showScreenCorners": false
+  },
+  "location": {
+    "autoLocate": false,
+    "monthBeforeDay": false,
+    "name": "Jakarta, Indonesia",
+    "weatherEnabled": true,
+    "weatherShowEffects": true
+  },
+  "notifications": {
+    "enableBatteryToast": true,
+    "enableKeyboardLayoutToast": true,
+    "enabled": true,
+    "location": "top_right"
+  },
+  "osd": {
+    "enabled": true,
+    "location": "top_right"
+  },
+  "templates": {
+    "activeTemplates": [
+      {
+        "enabled": true,
+        "id": "gtk"
+      },
+      {
+        "enabled": true,
+        "id": "qt"
+      },
+      {
+        "enabled": true,
+        "id": "kcolorscheme"
+      },
+      {
+        "enabled": true,
+        "id": "foot"
+      },
+      {
+        "enabled": true,
+        "id": "ghostty"
+      },
+      {
+        "enabled": true,
+        "id": "kitty"
+      },
+      {
+        "enabled": true,
+        "id": "alacritty"
+      },
+      {
+        "enabled": true,
+        "id": "wezterm"
+      },
+      {
+        "enabled": true,
+        "id": "starship"
+      },
+      {
+        "enabled": true,
+        "id": "fuzzel"
+      },
+      {
+        "enabled": true,
+        "id": "vicinae"
+      },
+      {
+        "enabled": true,
+        "id": "walker"
+      },
+      {
+        "enabled": true,
+        "id": "pywalfox"
+      },
+      {
+        "enabled": true,
+        "id": "discord"
+      },
+      {
+        "enabled": true,
+        "id": "code"
+      },
+      {
+        "enabled": true,
+        "id": "zed"
+      },
+      {
+        "enabled": true,
+        "id": "helix"
+      },
+      {
+        "enabled": true,
+        "id": "spicetify"
+      },
+      {
+        "enabled": true,
+        "id": "telegram"
+      },
+      {
+        "enabled": true,
+        "id": "cava"
+      },
+      {
+        "enabled": true,
+        "id": "yazi"
+      },
+      {
+        "enabled": true,
+        "id": "emacs"
+      },
+      {
+        "enabled": true,
+        "id": "niri"
+      },
+      {
+        "enabled": true,
+        "id": "mango"
+      },
+      {
+        "enabled": true,
+        "id": "btop"
+      },
+      {
+        "enabled": true,
+        "id": "zathura"
+      },
+      {
+        "enabled": true,
+        "id": "steam"
+      }
+    ],
+    "enableUserTheming": false
+  },
+  "wallpaper": {
+    "directory": "/nix/store/hqkahkg08gn2r6kd3xj1xszgdnsh48nn-noctalia-shell-2026-04-19_b8781ae/share/noctalia-shell/Assets/Wallpaper",
+    "enabled": true,
+    "fillMode": "crop",
+    "setWallpaperOnAllMonitors": true,
+    "transitionDuration": 1500
+  }
+}

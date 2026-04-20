@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
   programs.fish = {
     enable = true;
     
@@ -30,7 +35,7 @@
       # Tide prompt configuration
       set -g tide_prompt_icon_connection ' '
       set -g tide_left_prompt_items pwd git
-      set -g tide_right_prompt_items status cmd_duration context jobs time
+      set -g tide_right_prompt_items status cmd_duration context time
       set -g tide_cmd_duration_threshold 3000
       
       # Custom greeting
