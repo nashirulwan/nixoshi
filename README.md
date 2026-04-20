@@ -4,6 +4,8 @@ Personal NixOS flake for `nixoshi`.
 
 This configuration currently targets a Niri + Noctalia desktop setup with HyperHDR ambient lighting support.
 
+This repository is machine-specific. It includes host hardware configuration and personal paths for the `nixoshi` laptop, so review those files before reusing it on another machine.
+
 ## Desktop Stack
 
 - NixOS unstable flake
@@ -126,13 +128,3 @@ curl -fsS http://127.0.0.1:8090/json-rpc \
   -H 'Content-Type: application/json' \
   -d '{"command":"componentstate","componentstate":{"component":"SYSTEMGRABBER","state":true}}'
 ```
-
-## Branch Notes
-
-The Niri, Noctalia, and HyperHDR migration work is on:
-
-```bash
-niri-noctalia-hyperhdr
-```
-
-Merge or push this branch to `main` when it is ready to become the default GitHub view.
