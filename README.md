@@ -23,6 +23,12 @@ This configuration currently targets a Niri + Noctalia desktop setup with HyperH
 - Noctalia mutable settings: `home/nashiru/noctalia-settings.mutable.json`
 - SDDM theme assets: `assets/sddm-themes/qylock/pixel-coffee/`
 
+## Sources
+
+- [Niri](https://github.com/YaLTeR/niri)
+- [Noctalia Shell](https://github.com/noctalia-dev/noctalia-shell)
+- [Qylock SDDM themes](https://github.com/Darkkal44/qylock)
+
 The active Niri config is managed by Home Manager at:
 
 ```bash
