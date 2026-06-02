@@ -4,7 +4,6 @@ let
   noctaliaPackage = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
   noctaliaWallpaperDir = "${noctaliaPackage}/share/noctalia-shell/Assets/Wallpaper";
   noctaliaMutableSettings = "${config.home.homeDirectory}/nixoshi/home/nashiru/noctalia-settings.mutable.json";
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   hyperhdrMusicEffect = "Music: stereo for LED strip (MULTI COLOR FAST)";
 
   hyperhdrAudioRoute = pkgs.writeShellScript "hyperhdr-audio-route" ''
@@ -72,6 +71,70 @@ let
       -d '{"command":"clear","priority":1}' >/dev/null 2>&1 || true
   '';
 
+  voiceType = pkgs.writeShellScriptBin "voice-type" ''
+    PIDFILE="/tmp/voice-typing.pid"
+    AUDIOFILE="/tmp/voice-typing.wav"
+    OUTFILE="/tmp/voice-typing-result"
+    MODEL="$HOME/.cache/openwhispr/whisper-models/ggml-small.bin"
+
+    if [ -f "$PIDFILE" ]; then
+      kill "$(cat "$PIDFILE")" 2>/dev/null
+      rm -f "$PIDFILE"
+      sleep 0.3
+      ${pkgs.libnotify}/bin/notify-send -t 3000 "Voice Typing" "Memproses suara..."
+      ${pkgs.whisper-cpp-vulkan}/bin/whisper-cli -m "$MODEL" -f "$AUDIOFILE" --no-timestamps -l id -otxt -of "$OUTFILE" --suppress-nst --no-speech-thold 0.8 --entropy-thold 2.0 --logprob-thold -0.3 2>/dev/null
+      TEXT=$(sort -u "''${OUTFILE}.txt" 2>/dev/null | sed 's/^[[:space:]]*//' | grep -viE '^\[|^\*|^\(|terima kasih kerana menonton|thanks for watching|thank you for watching' | tr -d '\n' | sed 's/[[:space:]]*$//')
+      rm -f "''${OUTFILE}.txt" "$AUDIOFILE"
+      if [ -n "$TEXT" ]; then
+        ${pkgs.wtype}/bin/wtype "$TEXT"
+      fi
+    else
+      ${pkgs.pipewire}/bin/pw-record --rate 16000 --channels 1 --format s16 "$AUDIOFILE" &
+      echo $! > "$PIDFILE"
+      ${pkgs.libnotify}/bin/notify-send -t 30000 "Voice Typing" "Merekam... tekan Ctrl+Alt+V lagi untuk berhenti"
+    fi
+  '';
+
+  hyperhdrStartupSync = pkgs.writeShellScript "hyperhdr-startup-sync" ''
+    set -eu
+    # systemd user services have a minimal PATH; ensure coreutils resolve.
+    export PATH=${pkgs.coreutils}/bin:$PATH
+
+    manager_env=""
+    wayland_display=""
+    # Wait for a valid WAYLAND_DISPLAY socket before acquiring the stream.
+    i=0
+    while [ "$i" -lt 60 ]; do
+      manager_env="$(${pkgs.systemd}/bin/systemctl --user show-environment 2>/dev/null || true)"
+      wayland_display="$(printf '%s\n' "$manager_env" | ${pkgs.gnused}/bin/sed -n 's/^WAYLAND_DISPLAY=//p' | head -n1)"
+
+      if [ -n "$wayland_display" ] && [ -S "/run/user/$UID/$wayland_display" ]; then
+        break
+      fi
+
+      sleep 0.5
+      i=$((i + 1))
+    done
+
+    # Let PipeWire/portal settle before asking HyperHDR to acquire a monitor stream.
+    sleep 6
+
+    ${pkgs.systemd}/bin/systemctl --user restart hyperhdr.service
+
+    i=0
+    while [ "$i" -lt 40 ]; do
+      if ${pkgs.curl}/bin/curl -fsS http://127.0.0.1:8090/json-rpc \
+        -H 'Content-Type: application/json' \
+        -d '{"command":"serverinfo"}' >/dev/null 2>&1; then
+        break
+      fi
+      sleep 0.5
+      i=$((i + 1))
+    done
+
+    ${hyperhdrMonitor}/bin/hyperhdr-monitor >/dev/null 2>&1 || true
+  '';
+
 in
 
 {
@@ -86,12 +149,11 @@ in
     hyperhdrSession
     hyperhdrMusic
     hyperhdrMonitor
-
+    voiceType
     kitty
     jq
     bibata-cursors
-    spicetify-cli
-
+    obsidian
   ];
 
   home.pointerCursor = {
@@ -100,39 +162,6 @@ in
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Ice";
     size = 24;
-  };
-
-  programs.kitty = {
-    enable = true;
-    font = {
-      name = "JetBrainsMono Nerd Font";
-      size = 11;
-    };
-    settings = {
-      background_opacity = "0.94";
-      confirm_os_window_close = 0;
-      cursor_shape = "beam";
-      enable_audio_bell = false;
-      hide_window_decorations = "titlebar-only";
-      remember_window_size = false;
-      initial_window_width = 960;
-      initial_window_height = 560;
-      tab_bar_edge = "top";
-      tab_bar_style = "powerline";
-      window_padding_width = 8;
-    };
-    extraConfig = ''
-      include themes/noctalia.conf
-    '';
-  };
-
-  programs.btop = {
-    enable = true;
-    settings = {
-      color_theme = "noctalia";
-      theme_background = false;
-      vim_keys = true;
-    };
   };
 
   xdg.configFile = {
@@ -156,11 +185,15 @@ in
   # Import user modules
   imports = [
     inputs.noctalia.homeModules.default
-    inputs.spicetify-nix.homeManagerModules.default
+    inputs.mango.hmModules.mango
     ./programs/git.nix
     ./programs/yazi.nix
+    ./programs/kitty.nix
+    ./programs/btop.nix
+    ./programs/fastfetch.nix
     ./shell/fish.nix
     ./theme.nix
+    ./mango.nix
   ];
 
   programs.noctalia-shell = {
@@ -206,7 +239,7 @@ in
       colorSchemes = {
         predefinedScheme = "Noctalia (default)";
         darkMode = true;
-        useWallpaperColors = false;
+        useWallpaperColors = true;
         syncGsettings = true;
       };
       templates = {
@@ -232,7 +265,6 @@ in
           "code"
           "zed"
           "helix"
-          "spicetify"
           "telegram"
           "cava"
           "yazi"
@@ -438,23 +470,6 @@ in
     };
   };
 
-  programs.spicetify = {
-    enable = true;
-
-    enabledExtensions = with spicePkgs.extensions; [
-      adblockify
-      beautifulLyrics
-      hidePodcasts
-      shuffle
-      volumePercentage
-    ];
-
-    enabledCustomApps = with spicePkgs.apps; [
-      marketplace
-      lyricsPlus
-    ];
-  };
-
   home.activation.ensureNoctaliaNiriTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     theme_file="${config.home.homeDirectory}/.config/niri/noctalia.kdl"
     if [ ! -e "$theme_file" ]; then
@@ -465,7 +480,59 @@ KDL
     fi
   '';
 
+  home.activation.linkMutableNoctaliaSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    settings_dir="${config.home.homeDirectory}/.config/noctalia"
+    settings_file="$settings_dir/settings.json"
+
+    mkdir -p "$settings_dir"
+    chmod u+w "${noctaliaMutableSettings}" 2>/dev/null || true
+    rm -f "$settings_file"
+    ln -s "${noctaliaMutableSettings}" "$settings_file"
+  '';
+
   xdg.configFile."niri/config.kdl".source = ./niri/config.kdl;
+
+  systemd.user.services.hyperhdr = {
+    Unit = {
+      Description = "HyperHDR ambient lighting";
+      After = [ "graphical-session.target" "pipewire.service" "pipewire-pulse.service" "wireplumber.service" ];
+      Wants = [ "pipewire.service" "pipewire-pulse.service" "wireplumber.service" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.hyperhdr}/share/hyperhdr/bin/hyperhdr";
+      ExecStartPost = "${hyperhdrAudioRoute}";
+      Restart = "on-failure";
+      RestartSec = 5;
+      # No GL/EGL libs on purpose: with EGL, HyperHDR's DMA-BUF path fails
+      # modifier negotiation against xdg-desktop-portal-wlr ("no more input
+      # formats", stream dies). Without EGL it falls back to the stable MemFD
+      # software path, which is the only one that works on mango + wlr portal.
+      Environment = [
+        "HYPERHDR_PLAYBACK_NODE=easyeffects_sink"
+      ];
+    };
+
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+
+  systemd.user.services.hyperhdr-startup-sync = {
+    Unit = {
+      Description = "Delay HyperHDR monitor sync until Wayland session is ready";
+      After = [ "graphical-session.target" "pipewire.service" "pipewire-pulse.service" "wireplumber.service" ];
+      Wants = [ "pipewire.service" "pipewire-pulse.service" "wireplumber.service" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      Type = "oneshot";
+      ExecStart = hyperhdrStartupSync;
+    };
+
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
 
   systemd.user.services.hyperhdr-audio-route = {
     Unit = {
@@ -491,7 +558,7 @@ KDL
 
     Install.WantedBy = [ "timers.target" ];
   };
-  
+
   # Let Home Manager manage itself
   programs.home-manager.enable = true;
 }

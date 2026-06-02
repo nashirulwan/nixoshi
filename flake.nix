@@ -23,10 +23,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
+    # MangoWC: Wayland compositor (dwl-based). Dipasang berdampingan dengan niri.
+    mango = {
+      url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Older mpv branch for Feishin compatibility.
+    nixpkgs-mpv-compat.url = "github:nixos/nixpkgs/nixos-23.05";
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {

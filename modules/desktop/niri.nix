@@ -1,41 +1,39 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  qylockPixelCoffee = pkgs.stdenvNoCC.mkDerivation {
-    pname = "sddm-qylock-pixel-coffee";
-    version = "2026-04-20";
-    src = ../../assets/sddm-themes/qylock/pixel-coffee;
+  qylockSword = pkgs.stdenvNoCC.mkDerivation {
+    pname = "sddm-qylock-sword";
+    version = "2026-06-02";
+    src = ../../assets/sddm-themes/qylock/sword;
 
     installPhase = ''
       runHook preInstall
-      mkdir -p $out/share/sddm/themes/pixel-coffee
-      cp -r . $out/share/sddm/themes/pixel-coffee
+      mkdir -p $out/share/sddm/themes/sword
+      cp -r . $out/share/sddm/themes/sword
       runHook postInstall
     '';
   };
 in
 {
-  # Niri Wayland compositor.
   programs.niri = {
     enable = true;
     useNautilus = true;
   };
 
-  # Keep the current D-Bus implementation so nixos-rebuild switch is not
-  # blocked by a broker -> dbus critical component change.
   services.dbus.implementation = "broker";
 
   services.displayManager.defaultSession = "niri";
 
-  # SDDM display manager
+  services.xserver.enable = true;
+
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = true;
-    theme = "pixel-coffee";
+    wayland.enable = false;
+    theme = "sword";
     package = pkgs.kdePackages.sddm;
     extraPackages =
       (with pkgs.kdePackages; [
-        qylockPixelCoffee
+        qylockSword
         qt5compat
         qtsvg
         qtmultimedia
@@ -49,15 +47,17 @@ in
       ]);
   };
 
+  services.xserver.displayManager.setupCommands = ''
+    ${pkgs.xrandr}/bin/xrandr --output HDMI-A-1 --auto --primary || true
+  '';
+
   nix.settings = {
     extra-substituters = [ "https://noctalia.cachix.org" ];
     extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
   };
 
-  # Touchpad support for laptops
   services.libinput.enable = true;
 
-  # Session services commonly expected by Niri setups.
   services.gnome.gnome-keyring.enable = true;
   services.gnome.gcr-ssh-agent.enable = false;
   security.pam.services.swaylock = {};
@@ -76,7 +76,6 @@ in
     ];
   };
 
-  # Session services commonly used by Noctalia widgets and laptop controls.
   services.geoclue2.enable = true;
   services.upower.enable = true;
   services.power-profiles-daemon.enable = true;
@@ -110,7 +109,7 @@ in
     wmenu
     xwayland-satellite
   ]) ++ [
-    qylockPixelCoffee
+    qylockSword
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }

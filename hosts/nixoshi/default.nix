@@ -12,10 +12,10 @@
     ../../modules/system/security.nix
     ../../modules/system/bluetooth.nix
     ../../modules/system/nix.nix
-    ../../modules/system/ollama.nix
-    
+
     # Desktop modules
     ../../modules/desktop/niri.nix
+    ../../modules/desktop/mango.nix
     ../../modules/desktop/fonts.nix
     ../../modules/desktop/pipewire.nix
     
@@ -28,7 +28,7 @@
   # User account definition
   users.users.nashiru = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "uucp" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "uucp" "input" ];
     shell = pkgs.fish;
     packages = with pkgs; [ tree ];
   };
