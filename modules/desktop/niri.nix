@@ -24,6 +24,8 @@ in
 
   services.displayManager.defaultSession = "niri";
 
+  # X server masih dibutuhkan SDDM (login manager). 
+  # Bisa di-disable kalau SDDM udah pakai Wayland mode.
   services.xserver.enable = true;
 
   services.displayManager.sddm = {

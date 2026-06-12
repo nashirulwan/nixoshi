@@ -80,6 +80,8 @@ in
     obs-studio
     xwayland-run
     libreoffice
+    hunspellDicts.en_US
+    hyphenDicts.en-us
     feh
     gh
     home-manager

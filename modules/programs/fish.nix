@@ -6,9 +6,8 @@
     enable = true;
     
     # System-wide Fish initialization
-    # Note: User-specific config will be in home-manager
+    # Note: User-specific config (aliases, greeting, etc.) ada di home-manager
     interactiveShellInit = ''
-      set fish_greeting
       fish_add_path ~/.npm-global/bin
     '';
   };

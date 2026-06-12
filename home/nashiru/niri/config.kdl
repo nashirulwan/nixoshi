@@ -211,7 +211,5 @@ binds {
     XF86MonBrightnessUp { spawn "noctalia-shell" "ipc" "call" "brightness" "increase"; }
     XF86MonBrightnessDown { spawn "noctalia-shell" "ipc" "call" "brightness" "decrease"; }
 
-    Ctrl+Alt+V { spawn "voice-type"; }
-
     Mod+Shift+E { quit; }
 }

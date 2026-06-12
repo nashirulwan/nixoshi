@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Allow unfree packages (Steam is proprietary)
-  nixpkgs.config.allowUnfree = true;
-  
   # Steam gaming platform
   programs.steam = {
     enable = true;
@@ -22,6 +19,4 @@
     protonup-qt    # Proton version manager
   ];
   
-  # GPU support for gaming
-  hardware.graphics.enable = true;
 }

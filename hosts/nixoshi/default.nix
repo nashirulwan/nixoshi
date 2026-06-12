@@ -12,6 +12,7 @@
     ../../modules/system/security.nix
     ../../modules/system/bluetooth.nix
     ../../modules/system/nix.nix
+    ../../modules/system/virtualisation.nix
 
     # Desktop modules
     ../../modules/desktop/niri.nix
@@ -35,6 +36,9 @@
 
   # DaVinci Resolve needs an OpenCL runtime for AMD GPUs.
   hardware.amdgpu.opencl.enable = true;
+  
+  # GPU support (needed by Steam, DaVinci Resolve, HyperHDR, etc.)
+  hardware.graphics.enable = true;
   
   # NixOS state version
   # DO NOT CHANGE - see manual for details

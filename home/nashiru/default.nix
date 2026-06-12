@@ -71,29 +71,7 @@ let
       -d '{"command":"clear","priority":1}' >/dev/null 2>&1 || true
   '';
 
-  voiceType = pkgs.writeShellScriptBin "voice-type" ''
-    PIDFILE="/tmp/voice-typing.pid"
-    AUDIOFILE="/tmp/voice-typing.wav"
-    OUTFILE="/tmp/voice-typing-result"
-    MODEL="$HOME/.cache/openwhispr/whisper-models/ggml-small.bin"
 
-    if [ -f "$PIDFILE" ]; then
-      kill "$(cat "$PIDFILE")" 2>/dev/null
-      rm -f "$PIDFILE"
-      sleep 0.3
-      ${pkgs.libnotify}/bin/notify-send -t 3000 "Voice Typing" "Memproses suara..."
-      ${pkgs.whisper-cpp-vulkan}/bin/whisper-cli -m "$MODEL" -f "$AUDIOFILE" --no-timestamps -l id -otxt -of "$OUTFILE" --suppress-nst --no-speech-thold 0.8 --entropy-thold 2.0 --logprob-thold -0.3 2>/dev/null
-      TEXT=$(sort -u "''${OUTFILE}.txt" 2>/dev/null | sed 's/^[[:space:]]*//' | grep -viE '^\[|^\*|^\(|terima kasih kerana menonton|thanks for watching|thank you for watching' | tr -d '\n' | sed 's/[[:space:]]*$//')
-      rm -f "''${OUTFILE}.txt" "$AUDIOFILE"
-      if [ -n "$TEXT" ]; then
-        ${pkgs.wtype}/bin/wtype "$TEXT"
-      fi
-    else
-      ${pkgs.pipewire}/bin/pw-record --rate 16000 --channels 1 --format s16 "$AUDIOFILE" &
-      echo $! > "$PIDFILE"
-      ${pkgs.libnotify}/bin/notify-send -t 30000 "Voice Typing" "Merekam... tekan Ctrl+Alt+V lagi untuk berhenti"
-    fi
-  '';
 
   hyperhdrStartupSync = pkgs.writeShellScript "hyperhdr-startup-sync" ''
     set -eu
@@ -135,11 +113,27 @@ let
     ${hyperhdrMonitor}/bin/hyperhdr-monitor >/dev/null 2>&1 || true
   '';
 
+  # Turning the external monitor off drops HDMI-A-1 (HPD), which kills the
+  # screencast stream HyperHDR captures; it does not reconnect on its own.
+  # Poll for the output coming back and re-sync once when it does.
+  hyperhdrHdmiWatch = pkgs.writeShellScript "hyperhdr-hdmi-watch" ''
+    set -u
+    export PATH=${pkgs.coreutils}/bin:$PATH
+    state="$HOME/.cache/hyperhdr-hdmi-present"
+    present=no
+    ${pkgs.wlr-randr}/bin/wlr-randr 2>/dev/null | ${pkgs.gnugrep}/bin/grep -q '^HDMI-A-1' && present=yes
+    prev="$(cat "$state" 2>/dev/null || echo unknown)"
+    printf '%s' "$present" > "$state"
+    if [ "$present" = yes ] && [ "$prev" = no ]; then
+      ${pkgs.systemd}/bin/systemctl --user start hyperhdr-startup-sync.service
+    fi
+  '';
+
 in
 
 {
   # Home Manager version
-  home.stateVersion = "26.05";
+  home.stateVersion = "24.11";
   
   # User information
   home.username = "nashiru";
@@ -149,7 +143,6 @@ in
     hyperhdrSession
     hyperhdrMusic
     hyperhdrMonitor
-    voiceType
     kitty
     jq
     bibata-cursors
@@ -554,6 +547,27 @@ KDL
       OnStartupSec = "20s";
       OnUnitActiveSec = "30s";
       Unit = "hyperhdr-audio-route.service";
+    };
+
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  # Re-sync HyperHDR automatically when the external monitor comes back on.
+  systemd.user.services.hyperhdr-hdmi-watch = {
+    Unit.Description = "Re-sync HyperHDR when the captured monitor returns";
+    Service = {
+      Type = "oneshot";
+      ExecStart = hyperhdrHdmiWatch;
+    };
+  };
+
+  systemd.user.timers.hyperhdr-hdmi-watch = {
+    Unit.Description = "Poll for the captured monitor returning";
+
+    Timer = {
+      OnStartupSec = "30s";
+      OnUnitActiveSec = "15s";
+      Unit = "hyperhdr-hdmi-watch.service";
     };
 
     Install.WantedBy = [ "timers.target" ];

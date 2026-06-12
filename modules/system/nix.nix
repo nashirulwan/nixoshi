@@ -1,12 +1,17 @@
 { config, lib, pkgs, ... }:
 
 {
+  # nix-ld: biar bisa jalanin non-NixOS binaries (AppImage, ELF dari luar).
+  # Kalau nggak dipake, disable aja biar lebih secure.
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     libcap
     zlib
     openssl
   ];
+
+  # Allow unfree packages (Steam, DaVinci Resolve, Zoom, Obsidian, etc.)
+  nixpkgs.config.allowUnfree = true;
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
