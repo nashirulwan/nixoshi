@@ -21,9 +21,6 @@
       core = {
         editor = "nvim";
       };
-      signing = {
-        format = null;  # adopt new default, silences stateVersion warning
-      };
       
       # Git aliases
       alias = {
