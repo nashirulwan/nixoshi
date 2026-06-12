@@ -22,8 +22,11 @@
         editor = "nvim";
       };
       
-      # Signing format (legacy default untuk stateVersion < 25.05)
-      signing.format = "openpgp";
+      # Signing (off by default, enable when GPG key is set up)
+      signing = {
+        format = "openpgp";
+        signByDefault = false;
+      };
       
       # Git aliases
       alias = {
