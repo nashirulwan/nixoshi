@@ -22,6 +22,9 @@
         editor = "nvim";
       };
       
+      # Signing format (legacy default untuk stateVersion < 25.05)
+      signing.format = "openpgp";
+      
       # Git aliases
       alias = {
         st = "status";
