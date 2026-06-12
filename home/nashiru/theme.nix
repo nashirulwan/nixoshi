@@ -87,6 +87,7 @@ in
     # adw-gtk3 di AKHIR gtk-4.0/gtk.css, sesudah override translucency kita,
     # sehingga background solid adw-gtk3 menimpa alpha kita. App GTK4/libadwaita
     # tetap dapat warna dari noctalia.css (diimport di awal gtkTranslucency).
+    gtk4.theme = null;  # adopt new default, silences stateVersion warning
   };
 
   dconf.settings = {
