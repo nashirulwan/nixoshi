@@ -19,27 +19,30 @@
     ../../modules/desktop/mango.nix
     ../../modules/desktop/fonts.nix
     ../../modules/desktop/pipewire.nix
-    
+
     # Program modules
     ../../modules/programs/fish.nix
     ../../modules/programs/steam.nix
     ../../modules/programs/default.nix
+
+    # Service modules
+    ../../modules/services/hermes.nix
   ];
-  
+
   # User account definition
   users.users.nashiru = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "uucp" "input" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "uucp" "input" "hermes" ];
     shell = pkgs.fish;
     packages = with pkgs; [ tree ];
   };
 
   # DaVinci Resolve needs an OpenCL runtime for AMD GPUs.
   hardware.amdgpu.opencl.enable = true;
-  
+
   # GPU support (needed by Steam, DaVinci Resolve, HyperHDR, etc.)
   hardware.graphics.enable = true;
-  
+
   # NixOS state version
   # DO NOT CHANGE - see manual for details
   system.stateVersion = "25.11";

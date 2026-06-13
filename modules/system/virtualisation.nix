@@ -7,6 +7,8 @@
   # Jangan sleep saat lid ditutup kalau charger nyambung, biar Seraphine tetap online.
   # Saat pakai baterai, behavior default (suspend) tetap berlaku.
   services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
     HandleLidSwitchExternalPower = "ignore";
+    HandleLidSwitchDocked = "ignore";
   };
 }

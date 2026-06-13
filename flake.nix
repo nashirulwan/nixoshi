@@ -31,9 +31,12 @@
 
     # Older mpv branch for Feishin compatibility.
     nixpkgs-mpv-compat.url = "github:nixos/nixpkgs/nixos-23.05";
+
+    # Hermes Agent
+    hermes-agent.url = "github:NousResearch/hermes-agent";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, hermes-agent, ... }: {
     nixosConfigurations.nixoshi = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
@@ -41,6 +44,9 @@
         # Host configuration
         ./hosts/nixoshi
         
+        # Hermes Agent NixOS module
+        hermes-agent.nixosModules.default
+
         # Home Manager integration
         home-manager.nixosModules.home-manager
         {
