@@ -1,0 +1,28 @@
+# Editor and local files
+.DS_Store
+*~
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Runtime state and local databases
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+
+# Sensitive local config (API keys, sudo rules, hermes security)
+overlays/
+
+/result
+/docs/superpowers/
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+id_rsa*
+id_ed25519*
