@@ -188,21 +188,7 @@ in
   };
 
   xdg.configFile = {
-    "ghostty/config".text = ''
-      theme = noctalia
-    '';
     "noctalia/settings.json".source = lib.mkForce (config.lib.file.mkOutOfStoreSymlink noctaliaMutableSettings);
-    "wezterm/wezterm.lua".text = ''
-      local wezterm = require("wezterm")
-
-      return {
-        color_scheme = "Noctalia",
-        font = wezterm.font("JetBrainsMono Nerd Font"),
-        font_size = 11.0,
-        hide_tab_bar_if_only_one_tab = true,
-        window_background_opacity = 0.94,
-      }
-    '';
   };
   
   # Import user modules
@@ -260,7 +246,7 @@ in
       };
       colorSchemes = {
         predefinedScheme = "Noctalia (default)";
-        darkMode = true;
+        darkMode = false;
         useWallpaperColors = true;
         syncGsettings = true;
       };
@@ -274,10 +260,8 @@ in
           "qt"
           "kcolorscheme"
           "foot"
-          "ghostty"
           "kitty"
           "alacritty"
-          "wezterm"
           "starship"
           "fuzzel"
           "vicinae"
@@ -502,7 +486,7 @@ KDL
     };
     Service = {
       Type = "idle";
-      ExecStart = "${pkgs.obsidian}/bin/obsidian --ozone-platform=wayland --no-sandbox";
+      ExecStart = "${pkgs.obsidian}/bin/obsidian --ozone-platform=wayland";
       Restart = "on-failure";
       RestartSec = 15;
       Environment = [ "GDK_BACKEND=wayland" ];

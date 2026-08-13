@@ -1,11 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  compatPkgs = import inputs.nixpkgs-mpv-compat {
-    system = pkgs.stdenv.hostPlatform.system;
-    config.allowUnfree = true;
-  };
-  feishinMpv = lib.hiPrio compatPkgs.mpv;
   zuno = pkgs.callPackage ./zuno.nix { };
 in
 {
@@ -79,7 +74,6 @@ in
 
     # Multimedia & Office (User additions)
     yt-dlp
-    feishinMpv
     smplayer
     obs-studio
     xwayland-run

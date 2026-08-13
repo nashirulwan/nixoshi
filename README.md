@@ -4,12 +4,8 @@ Reusable NixOS and Home Manager modules for a Wayland desktop built around
 [Mango](https://github.com/mangowm/mango), [Niri](https://github.com/YaLTeR/niri),
 and [Noctalia](https://github.com/noctalia-dev/noctalia-shell).
 
-![Desktop](assets/screenshots/desktop.png)
-
-|  |  |
-|--|--|
-| ![Launcher](assets/screenshots/launcher.png) | ![Blur](assets/screenshots/blur.png) |
-| ![SDDM](assets/screenshots/sddm.png) | ![Fastfetch](assets/screenshots/fastfetch.png) |
+Screenshots can be added under [`assets/screenshots`](assets/screenshots/).
+Only sanitized images should be published there.
 
 ### Components
 

@@ -16,7 +16,6 @@
   environment.systemPackages = with pkgs; [
     fzf                      # Fuzzy finder (dependency)
     fishPlugins.fzf-fish     # Fuzzy search for Fish
-    fishPlugins.tide         # Beautiful prompt theme
     fishPlugins.forgit       # Interactive git commands
     fishPlugins.grc          # Colorize command output
     grc                      # GRC dependency

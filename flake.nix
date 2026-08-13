@@ -23,9 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Older mpv branch for Feishin compatibility.
-    nixpkgs-mpv-compat.url = "github:nixos/nixpkgs/nixos-23.05";
-
     # Codex Desktop Linux
     codex-desktop-linux.url = "github:ilysenko/codex-desktop-linux";
   };
