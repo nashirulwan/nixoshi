@@ -1,9 +1,11 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, mangoOutput ? null, ... }:
 
 let
   mangoPackage = inputs.mango.packages.${pkgs.stdenv.hostPlatform.system}.mango;
 
   mangoToggleOutput = pkgs.writeShellScriptBin "mango-toggle-output" ''
+    ${lib.optionalString (mangoOutput != null)
+      "export MANGO_TOGGLE_OUTPUT=${lib.escapeShellArg mangoOutput}"}
     export WLR_RANDR_CMD="${pkgs.wlr-randr}/bin/wlr-randr"
     export SYSTEMCTL_CMD="${pkgs.systemd}/bin/systemctl"
     exec ${pkgs.bash}/bin/bash ${./mango-toggle-output.sh}
