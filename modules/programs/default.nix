@@ -1,7 +1,11 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  zuno = pkgs.callPackage ./zuno.nix { };
+  compatPkgs = import inputs.nixpkgs-mpv-compat {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+  feishinMpv = lib.hiPrio compatPkgs.mpv;
 in
 {
   # Core system packages
@@ -41,7 +45,6 @@ in
     # Utilities
     polkit_gnome
     pear-desktop
-    zuno
     antigravity
     davinci-resolve
 
@@ -74,6 +77,7 @@ in
 
     # Multimedia & Office (User additions)
     yt-dlp
+    feishinMpv
     smplayer
     obs-studio
     xwayland-run

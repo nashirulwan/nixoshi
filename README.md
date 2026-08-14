@@ -21,8 +21,7 @@ Only sanitized images should be published there.
 
 ### Use the modules
 
-The flake exports `nixosModules.default` and `homeManagerModules.default`. The
-[example flake](examples/flake.nix) is a complete minimal Home Manager consumer.
+The flake exports `nixosModules.default` and `homeManagerModules.default`.
 Set `home.username` and `home.homeDirectory` in the consuming configuration;
 the public module deliberately does not choose an account identity.
 

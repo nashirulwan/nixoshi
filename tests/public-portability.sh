@@ -13,7 +13,10 @@ fail() {
 [[ ! -d home/nashiru ]] || fail "identity-specific Home Manager directory remains"
 
 mapfile -d '' -t active_sources < <(
-  git ls-files -z -- '*.nix' '*.json' '*.conf' '*.kdl' '*.sh' ':(exclude)tests/**'
+  git ls-files -z -- '*.nix' '*.json' '*.conf' '*.kdl' '*.sh' ':(exclude)tests/**' |
+    while IFS= read -r -d '' source; do
+      [[ -f "$source" ]] && printf '%s\0' "$source"
+    done
 )
 [[ ${#active_sources[@]} -gt 0 ]] || fail "no active public sources were discovered"
 
@@ -67,7 +70,5 @@ rg -q 'privateRoot \? null' home/shell/fish.nix \
   || fail "Fish does not expose the optional privateRoot argument"
 rg -q 'nixoshiSettingsFile \? null' home/default.nix \
   || fail "Home Manager no longer exposes nixoshiSettingsFile"
-rg -q 'homeConfigurations\.demo' examples/flake.nix \
-  || fail "the example does not instantiate a Home Manager consumer"
 
 printf 'PASS public portability policy\n'

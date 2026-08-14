@@ -76,7 +76,8 @@ in
 
   services.geoclue2.enable = true;
   services.upower.enable = true;
-  services.fprintd.enable = true;
+  # Password-only login; fingerprint PAM previously made SDDM wait for input.
+  services.fprintd.enable = false;
   services.power-profiles-daemon.enable = true;
   services.tlp.enable = false;
   services.auto-cpufreq.enable = false;
