@@ -17,6 +17,7 @@ let
 
   hyperhdrAudioRoute = pkgs.writeShellScript "hyperhdr-audio-route" ''
     set -u
+    export PATH=${pkgs.coreutils}/bin:$PATH
 
     hyperhdr_url="http://127.0.0.1:8090"
     playback_node="''${HYPERHDR_PLAYBACK_NODE:-$(${pkgs.pulseaudio}/bin/pactl get-default-sink 2>/dev/null || true)}"
@@ -45,8 +46,6 @@ let
       sleep 0.25
     done
 
-    ${pkgs.pipewire}/bin/pw-link -d easyeffects_source:capture_FL "$capture_node:input_FL" >/dev/null 2>&1 || true
-    ${pkgs.pipewire}/bin/pw-link -d easyeffects_source:capture_FR "$capture_node:input_FR" >/dev/null 2>&1 || true
     ${pkgs.pipewire}/bin/pw-link "$playback_node:monitor_FL" "$capture_node:input_FL" >/dev/null 2>&1 || true
     ${pkgs.pipewire}/bin/pw-link "$playback_node:monitor_FR" "$capture_node:input_FR" >/dev/null 2>&1 || true
   '';
@@ -407,9 +406,6 @@ KDL
       # modifier negotiation against xdg-desktop-portal-wlr ("no more input
       # formats", stream dies). Without EGL it falls back to the stable MemFD
       # software path, which is the only one that works on mango + wlr portal.
-      Environment = [
-        "HYPERHDR_PLAYBACK_NODE=easyeffects_sink"
-      ];
     };
 
     Install.WantedBy = [ "graphical-session.target" ];
